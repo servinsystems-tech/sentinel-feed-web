@@ -506,9 +506,9 @@
       <div class="wallet-box">
         <span style="font-family:var(--font-mono); font-size:12px; color:var(--text-tertiary);">CHOOSE YOUR PLAN</span>
         <div style="display:flex; flex-direction:column; gap:10px; margin-top:14px;">
-          <button onclick="openCheckout('PADDLE_PRICE_ID_PERSONAL')" class="btn-secondary" style="cursor:pointer; width:100%; text-align:center;">Subscribe — Sentinel Personal</button>
-          <button onclick="openCheckout('PADDLE_PRICE_ID_TEAM')" class="btn-secondary" style="cursor:pointer; width:100%; text-align:center;">Subscribe — Sentinel Team</button>
-          <button onclick="openCheckout('PADDLE_PRICE_ID_DATASTREAM')" class="btn-primary" style="cursor:pointer; width:100%; text-align:center; border:none;">Subscribe — Sentinel Data Stream</button>
+          <button onclick="openCheckout('pro_01m2xb93hswpr0h1qkcbk4za34')" class="btn-secondary" style="cursor:pointer; width:100%; text-align:center;">Subscribe — Sentinel Personal</button>
+          <button onclick="openCheckout('pro_01m2xb9xxr0wvd62rjxkkn9af5')" class="btn-secondary" style="cursor:pointer; width:100%; text-align:center;">Subscribe — Sentinel Team</button>
+          <button onclick="openCheckout('pro_01m2xbarkx11y8sqxjkwxva3r5')" class="btn-primary" style="cursor:pointer; width:100%; text-align:center; border:none;">Subscribe — Sentinel Data Stream</button>
         </div>
       </div>
     </div>
@@ -520,7 +520,7 @@
   // Verify this exact setup snippet against your own Paddle dashboard > Developer Tools > Client-side tokens,
   // since Paddle occasionally updates their integration syntax.
   // Paddle.Environment.set("sandbox"); // uncomment while testing, remove for real payments
-  Paddle.Initialize({ token: "PADDLE_CLIENT_SIDE_TOKEN" });
+  Paddle.Initialize({ token: "test_f1b63dd2e1a24003da70023212f" });
   function openCheckout(priceId) {
     Paddle.Checkout.open({ items: [{ priceId: priceId, quantity: 1 }] });
   }
