@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SentinelFeed — Critical vulnerability intelligence, filtered daily</title>
+<meta name="description" content="SentinelFeed reads the NVD disclosure feed every morning and tells your team only what's worth acting on today.">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0F1419;
+    --panel: #161B22;
+    --panel-raised: #1B222B;
+    --border: #262E38;
+    --border-soft: #1E2530;
+    --text-primary: #EDF1F5;
+    --text-secondary: #8C98A6;
+    --text-tertiary: #5C6773;
+    --signal: #E8543E;
+    --signal-strong: #C43D2A;
+    --amber: #D6923A;
+    --brand: #34D399;
+    --brand-strong: #1FB981;
+    --brand-ink: #062E20;
+    --safe: #4F9E72;
+    --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --max-w: 1120px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--ink);
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 3px;
+  }
+
+  .wrap {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  p { max-width: 62ch; color: var(--text-secondary); }
+
+  h1, h2, h3 { font-weight: 600; letter-spacing: -0.01em; margin: 0; }
+
+  /* ---------- Nav ---------- */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(15,20,25,0.88);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-soft);
+  }
+  nav .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+  }
+  .brand {
+    font-size: 19px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+  .brand .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--signal);
+    box-shadow: 0 0 0 4px rgba(232,84,62,0.15);
+  }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 15px;
+  }
+  .nav-links a:hover { color: var(--text-primary); }
+  .nav-cta {
+    background: var(--brand);
+    color: var(--brand-ink) !important;
+    font-weight: 600;
+    padding: 9px 18px;
+    border-radius: 6px;
+    text-decoration: none !important;
+    font-size: 14.5px;
+  }
+  .nav-cta:hover { background: var(--brand-strong); }
+  .logo-mark { height: 30px; width: auto; display: block; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding: 84px 0 96px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .hero .wrap {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .hero h1 {
+    font-size: clamp(32px, 4.2vw, 46px);
+    line-height: 1.18;
+  }
+  .hero .lede {
+    margin-top: 22px;
+    font-size: 18px;
+    max-width: 46ch;
+  }
+  .cta-row { display: flex; gap: 14px; margin-top: 34px; flex-wrap: wrap; }
+  .btn-primary, .btn-secondary {
+    display: inline-block;
+    padding: 13px 24px;
+    border-radius: 7px;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    border: 1px solid transparent;
+  }
+  .btn-primary { background: var(--brand-strong); color: #FFF; }
+  .btn-primary:hover { background: var(--brand); }
+  .btn-secondary { border-color: var(--border); color: var(--text-primary); }
+  .btn-secondary:hover { border-color: var(--text-tertiary); }
+  .trust-line {
+    margin-top: 26px;
+    font-size: 13.5px;
+    color: var(--text-tertiary);
+    font-family: var(--font-mono);
+  }
+
+  /* feed panel */
+  .feed-panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+  }
+  .feed-caption {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--text-tertiary);
+    padding: 0 2px 12px;
+    border-bottom: 1px solid var(--border-soft);
+    margin-bottom: 12px;
+  }
+  .feed-row {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    padding: 9px 10px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-tertiary);
+    opacity: 0.55;
+  }
+  .feed-row.highlight {
+    background: rgba(232,84,62,0.08);
+    border: 1px solid rgba(232,84,62,0.35);
+    opacity: 1;
+    color: var(--text-primary);
+    flex-wrap: wrap;
+    animation: reveal 0.6s ease-out 0.2s both;
+  }
+  @keyframes reveal {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .feed-row.highlight { animation: none; }
+  }
+  .badge {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+  .badge-critical { background: var(--signal); color: #1A0805; }
+  .badge-amber { background: var(--amber); color: #241500; }
+  .feed-desc { color: var(--text-secondary); font-size: 12.5px; width: 100%; }
+  .feed-row.highlight .feed-desc { color: var(--text-primary); }
+
+  /* ---------- Section shell ---------- */
+  section { padding: 88px 0; border-bottom: 1px solid var(--border-soft); }
+  .section-head { max-width: 56ch; margin-bottom: 48px; }
+  .section-head h2 { font-size: clamp(26px, 3vw, 32px); }
+  .section-head p { margin-top: 12px; font-size: 16px; }
+
+  /* ---------- How it works ---------- */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 36px;
+  }
+  .step { border-top: 1px solid var(--border); padding-top: 20px; }
+  .step .num {
+    font-family: var(--font-mono);
+    color: var(--signal);
+    font-size: 13px;
+  }
+  .step h3 { margin-top: 10px; font-size: 18px; }
+  .step p { margin-top: 8px; font-size: 15px; }
+
+  /* ---------- Sample brief ---------- */
+  .sample-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--amber);
+    border: 1px solid rgba(214,146,58,0.4);
+    padding: 3px 9px;
+    border-radius: 4px;
+    margin-bottom: 18px;
+  }
+  .brief-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 32px;
+  }
+  .brief-card .row1 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .cve-id { font-family: var(--font-mono); font-size: 15px; color: var(--text-primary); }
+  .brief-card h3 { margin-top: 14px; font-size: 19px; }
+  .brief-card .summary { margin-top: 10px; font-size: 15.5px; max-width: 68ch; }
+  .fade-wall {
+    position: relative;
+    margin-top: 18px;
+    padding: 16px 18px;
+    background: var(--panel-raised);
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-tertiary);
+  }
+
+  /* ---------- Pricing ---------- */
+  .plan-row {
+    display: grid;
+    grid-template-columns: 1.3fr 0.9fr 1.8fr auto;
+    gap: 24px;
+    align-items: center;
+    padding: 26px 0;
+    border-top: 1px solid var(--border);
+  }
+  .plan-row:last-child { border-bottom: 1px solid var(--border); }
+  .plan-name { font-size: 18px; font-weight: 600; }
+  .plan-tag {
+    display: block;
+    margin-top: 5px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-tertiary);
+  }
+  .plan-price { font-family: var(--font-mono); font-size: 22px; }
+  .plan-price .cycle { font-size: 13px; color: var(--text-tertiary); }
+  .plan-price .founding {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 12.5px;
+    color: var(--amber);
+    margin-top: 4px;
+  }
+  .plan-desc { font-size: 14.5px; color: var(--text-secondary); }
+  .plan-cta {
+    justify-self: end;
+    white-space: nowrap;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+  }
+  .plan-row.flagship .plan-cta { background: var(--brand-strong); border-color: transparent; color: #fff; }
+  .plan-row.flagship .plan-cta:hover { background: var(--brand); }
+  .plan-cta:hover { border-color: var(--text-tertiary); }
+
+  /* ---------- Signup / payment ---------- */
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+  .signup-embed {
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-tertiary);
+    min-height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .wallet-box {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 16px;
+  }
+  .wallet-box .addr {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    word-break: break-all;
+    color: var(--text-primary);
+    padding: 10px 12px;
+    background: var(--ink);
+    border-radius: 6px;
+    margin-top: 10px;
+  }
+  ol.pay-steps { padding-left: 20px; margin: 16px 0 0; }
+  ol.pay-steps li { color: var(--text-secondary); font-size: 14.5px; margin-bottom: 8px; }
+
+  /* ---------- Footer ---------- */
+  footer { padding: 48px 0; }
+  footer .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  footer .foot-links { display: flex; gap: 22px; font-size: 14px; }
+  footer .foot-links a { text-decoration: none; color: var(--text-secondary); }
+  footer .foot-links a:hover { color: var(--text-primary); }
+  footer .disclaimer {
+    font-size: 12.5px;
+    color: var(--text-tertiary);
+    max-width: 60ch;
+    margin-top: 18px;
+  }
+
+  @media (max-width: 860px) {
+    .hero .wrap { grid-template-columns: 1fr; gap: 44px; }
+    .steps { grid-template-columns: 1fr; gap: 28px; }
+    .split { grid-template-columns: 1fr; gap: 32px; }
+    .plan-row { grid-template-columns: 1fr; gap: 10px; }
+    .plan-cta { justify-self: start; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand"><img src="logo.png" alt="SentinelFeed" class="logo-mark" onerror="this.style.display='none'">SentinelFeed</div>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#sample">Sample brief</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#start" class="nav-cta">Start free trial</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <h1>Ten thousand CVEs get published a year. Three or four of them will actually hurt you this week.</h1>
+      <p class="lede">SentinelFeed reads the U.S. government's official vulnerability database every morning, so your team doesn't have to. One clear briefing when something's serious. Silence when nothing is.</p>
+      <div class="cta-row">
+        <a href="#start" class="btn-primary">Start your 7-day trial</a>
+        <a href="#sample" class="btn-secondary">Read a sample brief</a>
+      </div>
+      <div class="trust-line">SOURCE: NVD.NIST.GOV — REFRESHED DAILY, 07:00 UTC-4</div>
+    </div>
+    <div>
+      <div class="feed-panel">
+        <div class="feed-caption">Illustrative example — raw feed vs. what you receive</div>
+        <div class="feed-row">CVE-2026-1120X · CVSS 4.2 · low priority</div>
+        <div class="feed-row">CVE-2026-1121X · CVSS 3.1 · low priority</div>
+        <div class="feed-row">CVE-2026-1122X · CVSS 5.6 · monitor</div>
+        <div class="feed-row highlight">
+          <span class="cve-id">CVE-2026-XXXXX</span>
+          <span class="badge badge-critical">CVSS 9.8</span>
+          <span class="feed-desc">Remote code execution — enterprise VPN gateway. This is the one that reaches your inbox.</span>
+        </div>
+        <div class="feed-row">CVE-2026-1124X · CVSS 2.8 · low priority</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Three steps, every business day</h2>
+      <p>No dashboards to check. No feed to scroll. The system runs on its own and only speaks up when it matters.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">01</div>
+        <h3>Ingest</h3>
+        <p>Every morning, we pull the full disclosure feed directly from NVD — the U.S. government's official vulnerability database.</p>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <h3>Analyze</h3>
+        <p>Anything scoring above CVSS 8.0 gets a full executive-level impact read: what's affected, what it means for your infrastructure, what to patch first.</p>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <h3>Deliver</h3>
+        <p>If something critical surfaced, it's in your inbox before your first coffee. If nothing did, we stay quiet. No noise for the sake of noise.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sample">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="sample-tag">SAMPLE — FOR ILLUSTRATION</span>
+      <h2>What a critical day looks like</h2>
+      <p>This is the shape of the briefing, not a live report. Every real entry links back to the official NVD record so your team can verify before acting.</p>
+    </div>
+    <div class="brief-card">
+      <div class="row1">
+        <span class="cve-id">CVE-2026-XXXXX</span>
+        <span class="badge badge-critical">CVSS 9.8</span>
+      </div>
+      <h3>Authentication bypass — enterprise identity provider</h3>
+      <p class="summary">An unauthenticated attacker can forge session tokens against affected versions, granting full administrative access to connected corporate applications. Any organization using single sign-on through the affected product should treat this as an immediate patching priority.</p>
+      <div class="fade-wall">→ Required patch action, affected version ranges, and verified NVD link unlock with your free trial.</div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Pricing</h2>
+      <p>Every plan starts with a 7-day free trial. No card required to try it, no lock-in to leave it.</p>
+    </div>
+
+    <div class="plan-row">
+      <div>
+        <div class="plan-name">Sentinel Personal</div>
+        <span class="plan-tag">FOR INDEPENDENT CONSULTANTS</span>
+      </div>
+      <div class="plan-price">$99<span class="cycle">/mo</span><span class="founding">Founding rate — first 90 days</span></div>
+      <div class="plan-desc">Daily email briefing. Everything you need to stay ahead of what's exploitable.</div>
+      <a href="#start" class="plan-cta">Start trial</a>
+    </div>
+
+    <div class="plan-row">
+      <div>
+        <div class="plan-name">Sentinel Team</div>
+        <span class="plan-tag">FOR TEAMS UP TO 5</span>
+      </div>
+      <div class="plan-price">$349<span class="cycle">/mo</span><span class="founding">Founding rate — first 90 days</span></div>
+      <div class="plan-desc">Everything in Personal, shared across your engineering or security team.</div>
+      <a href="#start" class="plan-cta">Start trial</a>
+    </div>
+
+    <div class="plan-row flagship">
+      <div>
+        <div class="plan-name">Sentinel Data Stream</div>
+        <span class="plan-tag">FOR PROGRAMMATIC INGESTION</span>
+      </div>
+      <div class="plan-price">$999<span class="cycle">/mo</span></div>
+      <div class="plan-desc">The full structured JSON brief, delivered straight to your Slack, SIEM, or internal webhook. Built for teams that automate.</div>
+      <a href="#start" class="plan-cta">Start trial</a>
+    </div>
+  </div>
+</section>
+
+<section id="start">
+  <div class="wrap split">
+    <div>
+      <h2>Start your trial</h2>
+      <p style="margin-top:12px;">Leave your email below. Your 7-day trial starts the moment you confirm — no payment needed until you decide to continue.</p>
+      <div class="signup-embed">
+        Paste your Beehiiv subscribe-form embed code here.<br>Beehiiv dashboard → Publication → Subscribe Forms → Embed.
+      </div>
+    </div>
+    <div>
+      <h2>Ready to continue? Subscribe securely</h2>
+      <p style="margin-top:12px;">Payments are processed by Paddle, our authorized reseller. Your card is charged automatically after your 7-day trial — cancel anytime, no manual steps. Invoices are issued automatically.</p>
+      <div class="wallet-box">
+        <span style="font-family:var(--font-mono); font-size:12px; color:var(--text-tertiary);">CHOOSE YOUR PLAN</span>
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:14px;">
+          <button onclick="openCheckout('PADDLE_PRICE_ID_PERSONAL')" class="btn-secondary" style="cursor:pointer; width:100%; text-align:center;">Subscribe — Sentinel Personal</button>
+          <button onclick="openCheckout('PADDLE_PRICE_ID_TEAM')" class="btn-secondary" style="cursor:pointer; width:100%; text-align:center;">Subscribe — Sentinel Team</button>
+          <button onclick="openCheckout('PADDLE_PRICE_ID_DATASTREAM')" class="btn-primary" style="cursor:pointer; width:100%; text-align:center; border:none;">Subscribe — Sentinel Data Stream</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+<script>
+  // Verify this exact setup snippet against your own Paddle dashboard > Developer Tools > Client-side tokens,
+  // since Paddle occasionally updates their integration syntax.
+  // Paddle.Environment.set("sandbox"); // uncomment while testing, remove for real payments
+  Paddle.Initialize({ token: "PADDLE_CLIENT_SIDE_TOKEN" });
+  function openCheckout(priceId) {
+    Paddle.Checkout.open({ items: [{ priceId: priceId, quantity: 1 }] });
+  }
+</script>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <div class="brand"><img src="logo.png" alt="SentinelFeed" class="logo-mark" onerror="this.style.display='none'">SentinelFeed</div>
+      <p class="disclaimer">SentinelFeed provides curated informational analysis of publicly disclosed vulnerabilities. It is not a substitute for your organization's own vulnerability management program. Always verify details against the official vendor advisory before acting.</p>
+    </div>
+    <div class="foot-links">
+      <a href="https://x.com/YOUR_X_HANDLE" target="_blank" rel="noopener">X / Twitter</a>
+      <a href="/terms.html">Terms of Service</a>
+      <a href="/refund.html">Refund Policy</a>
+      <a href="/privacy.html">Privacy Notice</a>
+      <a href="mailto:YOUR_EMAIL_HERE">Contact</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
