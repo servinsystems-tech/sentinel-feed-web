@@ -519,7 +519,7 @@
 <script>
   // Verify this exact setup snippet against your own Paddle dashboard > Developer Tools > Client-side tokens,
   // since Paddle occasionally updates their integration syntax.
-  // Paddle.Environment.set("sandbox"); // uncomment while testing, remove for real payments
+  Paddle.Environment.set("sandbox"); // Sandbox client-side token; switch configuration before going live.
   Paddle.Initialize({ token: "test_f1b63dd2e1a24003da70023212f" });
   function openCheckout(priceId) {
     Paddle.Checkout.open({ items: [{ priceId: priceId, quantity: 1 }] });
