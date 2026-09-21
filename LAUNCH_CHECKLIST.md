@@ -5,7 +5,7 @@ The static site is prepared for `https://getsentinelfeed.com/` and GitHub Pages.
 ## Completed in this PR
 
 - Original supplied logo retained and its visible shield centered consistently with CSS.
-- Public operator identity added: FABRICIO EZEQUIEL FERREIRA SERVÍN, RUC 6364832-6, Paraguay.
+- The legal operator identity is disclosed only in the body of the Terms page, not in global components or metadata.
 - Public support address set to `support@getsentinelfeed.com`; the private destination mailbox is deliberately not committed.
 - Terms, Privacy Notice and Refund Policy completed and linked from the purchase page.
 - Canonical URLs, Open Graph URL, structured business data, `CNAME`, `robots.txt` and `sitemap.xml` added for the new domain.
