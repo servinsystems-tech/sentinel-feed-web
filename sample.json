@@ -1,0 +1,16 @@
+{
+  "date": "2026-09-21",
+  "critical_threats_detected": true,
+  "vulnerabilities": [
+    {
+      "cve_id": "ILLUSTRATIVE-EXAMPLE",
+      "cvss_score": 9.8,
+      "epss_score": null,
+      "actively_exploited": true,
+      "affected_software": "Example Gateway",
+      "executive_summary": "Illustrative exposed gateway scenario; not a current vulnerability alert.",
+      "required_patch_action": "Verify affected versions and review the vendor advisory before applying the appropriate update.",
+      "nvd_url": "https://nvd.nist.gov/"
+    }
+  ]
+}
