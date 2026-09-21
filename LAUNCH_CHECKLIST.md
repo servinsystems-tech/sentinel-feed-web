@@ -1,28 +1,33 @@
-# SentinelFeed website handoff
+# SentinelFeed launch checklist
 
-This is a static website: no build subscription or new hosting platform required. Relative links support GitHub Pages project paths and a future custom domain.
+The static site is prepared for `https://getsentinelfeed.com/` and GitHub Pages. No paid hosting platform or build service is required.
 
-## Owner decisions needed before publishing
-- Fill operator legal name and support email in terms.html, privacy.html and refund.html. Existing placeholders intentionally remain visible in draft policies; no identity/contact address was invented.
-- Approve existing refund eligibility rule (7 days; no more than one briefing accessed/received) or specify a replacement. This redesign does not invent a new refund commitment.
-- Review legal drafts for actual operating entity, privacy practices, retention and applicable obligations.
-- Confirm how up to five Teams recipients are enrolled; current backend has no self-service team membership. Arrange onboarding before charging for this tier.
-- Confirm Enterprise HTTPS endpoint onboarding and successful delivery.
-- Add a real Kokoro sample if desired; the page explicitly labels the current excerpt as a fictional editorial sample.
-- Verify production Paddle approval, live client-side token, live monthly USD prices (99 / 349 / 999) and matching backend price map. Current retained IDs and token are sandbox; amounts cannot be verified from public credentials.
-- Test checkout in sandbox and test backend enrollment separately. Browser checkout completion never grants entitlements itself.
-- Replace sandbox configuration in index.html only after approval; remove the pre-launch notice and draft-policy banners only after all launch checks pass.
-- Connect domain and HTTPS, confirm email sender authentication and working support inbox.
-- Verify audio publication/email delivery in production; the site cannot guarantee backend delivery.
+## Completed in this PR
 
-## Implementation
-- Original supplied logo preserved in assets/logo-original.jpg; CSS framing displays its shield without modifying the image.
-- Paddle SDK loads only when a plan is selected. Explicit sandbox selection, public-token/environment validation, per-plan mapping and user-readable error states.
-- No email collection form without a working destination, no fabricated testimonials, certification badges or outcome guarantees.
-- Sample JSON is illustrative and includes null for unavailable EPSS.
-- Source links describe data provenance, not vendor endorsement.
-- Existing policies restyled. Trial promises corrected to checkout-dependent terms; obsolete email provider removed.
-- This PR includes the sandbox environment correction from the separate existing web PR #1; review overlap before merging both.
+- Original supplied logo retained and its visible shield centered consistently with CSS.
+- Public operator identity added: FABRICIO EZEQUIEL FERREIRA SERVÍN, RUC 6364832-6, Paraguay.
+- Public support address set to `support@getsentinelfeed.com`; the private destination mailbox is deliberately not committed.
+- Terms, Privacy Notice and Refund Policy completed and linked from the purchase page.
+- Canonical URLs, Open Graph URL, structured business data, `CNAME`, `robots.txt` and `sitemap.xml` added for the new domain.
+- Paddle SDK loads only when a plan is selected. Explicit sandbox selection, public-token/environment validation, per-plan mapping and user-readable error states remain in place.
+- Prices, plan deliverables, recurring monthly billing, cancellation, limitations and data-source disclosures are visible before checkout.
+- No fabricated testimonials, certification badges, outcome guarantees or automatic trial promise.
 
-## Preview
-Run `python -m http.server 8000` in this directory and open http://localhost:8000.
+## External setup required before Paddle production verification
+
+1. Publish the site with GitHub Pages and set the custom domain to `getsentinelfeed.com`.
+2. Point the apex domain and `www` to GitHub Pages, wait for DNS validation, then enable **Enforce HTTPS**.
+3. Configure `support@getsentinelfeed.com` as a forwarding alias to the owner's private mailbox and verify receipt before submitting the domain.
+4. Verify a dedicated sending subdomain such as `updates.getsentinelfeed.com` in Resend and copy the exact DNS records Resend provides. Do not put the Resend API key in this repository.
+5. Confirm Teams recipient onboarding and Enterprise HTTPS endpoint onboarding operationally.
+6. Test all three Paddle sandbox checkouts and the backend subscription sync.
+7. Submit `https://getsentinelfeed.com/` for Paddle website approval only after the home page and all three legal URLs are publicly reachable over HTTPS.
+8. After Paddle production approval, replace only the public sandbox client-side token and sandbox Price IDs with their production counterparts, switch the environment to `production`, and remove the pre-launch notice. Never add a Paddle API key to this site.
+
+## Refund commitment to review
+
+The public policy accepts requests for an initial subscription charge within 7 calendar days. Renewal charges are generally non-refundable except where law requires otherwise or the Service materially failed. Obtain local legal advice if a different Paraguay-specific policy is required.
+
+## Local preview
+
+Run `python -m http.server 8000` in this directory and open `http://localhost:8000`.
