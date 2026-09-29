@@ -128,7 +128,9 @@ test('Teams with zero extras is valid; an invalid address or fifth extra cannot 
 test('Enterprise requires a public HTTPS destination and sends it to its own checkout', async () => {
   const h = harness();
   h.buttons[2].click();
-  for (const url of ['', 'http://security.example.com/feed', 'https://user:pass@security.example.com/feed',
+  for (const url of ['', 'http://security.example.com/feed', 'https:/security.example.com/feed',
+    'https://security.example.com:0/feed', 'https://user:pass@security.example.com/feed',
+    'https://@security.example.com/feed',
     'https://localhost/feed', 'https://127.0.0.1/feed', 'https://100.64.1.1/feed',
     'https://security.example.com/feed#secret', 'https://security.example.com/feed#']) {
     h.enterprise.inputs[0].value = url;
