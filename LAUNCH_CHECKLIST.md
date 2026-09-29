@@ -9,20 +9,20 @@ The static site is prepared for `https://getsentinelfeed.com/` and GitHub Pages.
 - Public support address set to `support@getsentinelfeed.com`; the private destination mailbox is deliberately not committed.
 - Terms, Privacy Notice and Refund Policy completed and linked from the purchase page.
 - Canonical URLs, Open Graph URL, structured business data, `CNAME`, `robots.txt` and `sitemap.xml` added for the new domain.
-- Paddle SDK loads only when a plan is selected. Explicit sandbox selection, public-token/environment validation, per-plan mapping and user-readable error states remain in place.
+- Paddle SDK loads only when a plan is selected. The live public client-side token, production environment and per-plan Price ID mapping are configured without a private API key.
 - Prices, plan deliverables, recurring monthly billing, cancellation, limitations and data-source disclosures are visible before checkout.
-- No fabricated testimonials, certification badges, outcome guarantees or automatic trial promise.
+- No fabricated testimonials, certification badges or outcome guarantees. Only Individual advertises the 7-day free trial configured on its Paddle Price.
 
-## External setup required before Paddle production verification
+## External setup required before accepting live payments
 
 1. Publish the site with GitHub Pages and set the custom domain to `getsentinelfeed.com`.
 2. Point the apex domain and `www` to GitHub Pages, wait for DNS validation, then enable **Enforce HTTPS**.
 3. Configure `support@getsentinelfeed.com` as a forwarding alias to the owner's private mailbox and verify receipt before submitting the domain.
 4. Verify a dedicated sending subdomain such as `updates.getsentinelfeed.com` in Resend and copy the exact DNS records Resend provides. Do not put the Resend API key in this repository.
 5. Confirm Teams recipient onboarding and Enterprise HTTPS endpoint onboarding operationally.
-6. Test all three Paddle sandbox checkouts and the backend subscription sync.
-7. Submit `https://getsentinelfeed.com/` for Paddle website approval only after the home page and all three legal URLs are publicly reachable over HTTPS.
-8. After Paddle production approval, replace only the public sandbox client-side token and sandbox Price IDs with their production counterparts, switch the environment to `production`, and remove the pre-launch notice. Never add a Paddle API key to this site.
+6. In the private backend repository, set the live `PADDLE_API_KEY` GitHub Secret, `PADDLE_ENVIRONMENT=production` Variable, and live `PADDLE_PRICE_MAP` Variable. Delete or update an existing `PADDLE_PRICE_MAP` Secret, which takes precedence over the Variable. Never add the Paddle API key to this site.
+7. Check Paddle's live dashboard: Individual's Price has a 7-day free trial, Teams and Enterprise do not, and the site domain is approved for live checkout. Do not infer dashboard configuration from the client-side code.
+8. Coordinate the web deployment and backend live settings so a customer cannot complete a live checkout while backend sync still points to sandbox. Confirm Teams recipient onboarding and Enterprise HTTPS endpoint onboarding operationally before accepting those plans.
 
 ## Refund commitment to review
 
