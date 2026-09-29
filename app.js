@@ -32,11 +32,11 @@ function validEmail(value){
  return value.length<=254&&/^[a-z0-9._!#$%&'*+/=?^`{|}~-]+@[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)+$/i.test(value)&&!value.includes('..');
 }
 function validEndpoint(value){
- if(!value||value.length>2048||value!==value.trim()||/[\s<>#]/.test(value))return false;
+ if(!/^https:\/\//i.test(value)||value.length>2048||value!==value.trim()||/[\s<>#]/.test(value))return false;
  try{
   const url=new URL(value);
   const host=url.hostname.replace(/\.$/,'').toLowerCase();
-  if(url.protocol!=='https:'||url.username||url.password||url.hash||!url.port&&value.includes(':0/'))return false;
+  if(url.protocol!=='https:'||url.username||url.password||value.split('/')[2]?.includes('@')||url.hash||url.port==='0')return false;
   if(/(^|\.)(localhost|local|internal|lan|home|test|invalid)$/.test(host))return false;
   return /^(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z][a-z0-9-]*$/.test(host)&&!url.pathname.startsWith('//');
  }catch{return false;}
