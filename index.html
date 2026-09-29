@@ -14,12 +14,11 @@
 <link rel="icon" href="assets/logo-original.jpg" type="image/jpeg">
 <link rel="stylesheet" href="styles.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"SentinelFeed","url":"https://getsentinelfeed.com/","email":"support@getsentinelfeed.com","address":{"@type":"PostalAddress","addressCountry":"PY"}}</script>
-<script id="checkout-config" type="application/json">{"environment":"sandbox","token":"test_f1b63dd2e1a24003da70023212f","prices":{"personal":"pri_01m2xbgnkfa89wa63y3td1wnmh","team":"pri_01m2xbfbxnqkjpdsexwjw876ja","enterprise":"pri_01m2xbjq3psq0152sfkdy9k9x8"}}</script>
+<script id="checkout-config" type="application/json">{"environment":"production","token":"live_7395424bad626fbc2c4f37e795d","prices":{"personal":"pri_01m3pmg6kkhdcqbcads8btv6h4","team":"pri_01m3pmj4p2aj0sqygr72x87dhb","enterprise":"pri_01m3pmkpk1ayprw9a1z537z72z"}}</script>
 <script src="app.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<div class="preview-notice">PRE-LAUNCH PREVIEW <span>Checkout is in test mode. No real payments.</span></div>
 <header class="navigation"><div class="wrap nav-inner">
 <a class="brand" href="./" aria-label="SentinelFeed home"><span class="brand-icon"><img src="assets/logo-original.jpg" alt=""></span>Sentinel<span>Feed</span></a>
 <button class="menu-toggle" aria-expanded="false" aria-controls="navigation-links">Menu <span>＋</span></button>
@@ -70,10 +69,25 @@
 <section class="section wrap" id="pricing">
 <div class="section-heading"><div><p class="eyebrow">03 / CHOOSE YOUR COVERAGE</p><h2>A clearer morning.<br><em>At your team's scale.</em></h2></div><p>Monthly subscriptions in USD. Review applicable taxes and the final total in Paddle before confirming.</p></div>
 <div class="plans">
-<article class="plan"><p class="eyebrow">FOR INDEPENDENT PROFESSIONALS</p><h3>Individual</h3><p class="plan-intro">Your personal intelligence briefing.</p><p class="price">$99 <span>/ month</span></p><button class="button secondary" data-plan="personal">Choose Individual <span>↗</span></button><ul><li>Business-day audio briefing</li><li>One individual listener</li><li>Prioritized vulnerability context</li><li>CVSS, KEV and EPSS signals</li><li>Source references for verification</li></ul><p class="plan-foot">For consultants, technical founders and security practitioners.</p></article>
-<article class="plan featured"><div class="plan-ribbon">A SHARED VIEW OF THE DAY'S PRIORITIES</div><p class="eyebrow">FOR SECURITY & ENGINEERING</p><h3>Teams</h3><p class="plan-intro">Get up to five people on the same page.</p><p class="price">$349 <span>/ month</span></p><button class="button" data-plan="team">Choose Teams <span>↗</span></button><ul><li>Everything in Individual</li><li>Audio for up to five listeners</li><li>One shared daily perspective</li><li>Business impact and patch direction</li><li>Monthly team subscription</li></ul><p class="plan-foot">Team delivery setup is coordinated during onboarding.</p></article>
-<article class="plan"><p class="eyebrow">FOR TEAMS THAT AUTOMATE</p><h3>Enterprise</h3><p class="plan-intro">Audio context. Machine-readable detail.</p><p class="price">$999 <span>/ month</span></p><button class="button secondary" data-plan="enterprise">Choose Enterprise <span>↗</span></button><ul><li>Audio briefing + structured JSON</li><li>Per-CVE severity and risk signals</li><li>Executive summary and patch action</li><li>NVD reference for each finding</li><li>Delivery to your HTTPS endpoint</li></ul><p class="plan-foot">Endpoint setup required. Custom integrations are not included.</p></article>
+<article class="plan"><p class="eyebrow">FOR INDEPENDENT PROFESSIONALS</p><h3>Individual</h3><p class="plan-intro">Your personal intelligence briefing.</p><p class="price">$99 <span>/ month</span></p><p class="trial-terms">7-day free trial. Then $99/month unless cancelled before the trial ends. Paddle Checkout shows whether a payment method is required.</p><button class="button secondary" data-plan="personal">Start Individual trial <span>↗</span></button><ul><li>Business-day audio briefing</li><li>One individual listener</li><li>Prioritized vulnerability context</li><li>CVSS, KEV and EPSS signals</li><li>Source references for verification</li></ul><p class="plan-foot">For consultants, technical founders and security practitioners.</p></article>
+<article class="plan featured"><div class="plan-ribbon">A SHARED VIEW OF THE DAY'S PRIORITIES</div><p class="eyebrow">FOR SECURITY & ENGINEERING</p><h3>Teams</h3><p class="plan-intro">Get up to five people on the same page.</p><p class="price">$349 <span>/ month</span></p><p class="trial-terms">Billed monthly. No free trial.</p><button class="button" data-plan="team">Choose Teams <span>↗</span></button><ul><li>Audio briefing for the buyer and up to four additional people</li><li>One shared daily perspective</li><li>Business impact and patch direction</li><li>Monthly team subscription</li></ul><p class="plan-foot">Add your recipients before secure checkout.</p></article>
+<article class="plan"><p class="eyebrow">FOR TEAMS THAT AUTOMATE</p><h3>Enterprise</h3><p class="plan-intro">Audio context. Machine-readable detail.</p><p class="price">$999 <span>/ month</span></p><p class="trial-terms">Billed monthly. No free trial.</p><button class="button secondary" data-plan="enterprise">Choose Enterprise <span>↗</span></button><ul><li>Audio briefing + structured JSON</li><li>Per-CVE severity and risk signals</li><li>Executive summary and patch action</li><li>NVD reference for each finding</li><li>Delivery to your HTTPS endpoint</li></ul><p class="plan-foot">Enter your HTTPS endpoint before secure checkout. Custom integrations are not included.</p></article>
 </div>
+<form id="team-setup" class="checkout-setup" hidden novalidate>
+<h3>Choose your Team recipients</h3><p>The email used in Paddle Checkout receives the briefing. Add up to four more recipients, or leave these fields blank. Duplicate addresses receive one copy.</p>
+<div class="setup-grid">
+<label>Additional email 1 <input type="email" name="team_email_1" autocomplete="off" placeholder="colleague@example.com"></label>
+<label>Additional email 2 <input type="email" name="team_email_2" autocomplete="off" placeholder="colleague@example.com"></label>
+<label>Additional email 3 <input type="email" name="team_email_3" autocomplete="off" placeholder="colleague@example.com"></label>
+<label>Additional email 4 <input type="email" name="team_email_4" autocomplete="off" placeholder="colleague@example.com"></label>
+</div><button class="button" type="submit">Continue to secure checkout ↗</button>
+</form>
+<form id="enterprise-setup" class="checkout-setup" hidden novalidate>
+<h3>Set your Data Stream destination</h3><p>Enter a public HTTPS endpoint that can receive the daily structured JSON. The buyer also receives the audio briefing by email.</p>
+<label>HTTPS endpoint <input type="url" name="data_stream_endpoint" required inputmode="url" placeholder="https://security.example.com/sentinelfeed"></label>
+<button class="button" type="submit">Continue to secure checkout ↗</button>
+</form>
+<p class="setup-privacy">These delivery details are sent to Paddle with your checkout and used to provision your subscription. Do not enter credentials or secrets in the endpoint URL.</p>
 <p class="billing-note">Monthly automatic renewal. Cancel future renewals through Paddle. See <a href="terms.html">Terms</a> and <a href="refund.html">Refund Policy</a> before purchase.</p>
 <p id="checkout-status" role="status" aria-live="polite"></p><noscript><p class="notice">Checkout requires JavaScript. You can still read all plan details and policies.</p></noscript>
 </section>
@@ -81,8 +95,8 @@
 <details><summary>When will I receive my briefing?</summary><p>The pipeline is scheduled on business days, Monday through Friday. New subscriptions are picked up by the scheduled synchronization; access is not provisioned instantly at checkout. Delivery depends on source availability and successful processing.</p></details>
 <details><summary>Does SentinelFeed monitor my infrastructure?</summary><p>No. SentinelFeed analyzes public vulnerability disclosures. It does not scan your systems or determine your actual exposure. Your team verifies applicability and remediation against official advisories.</p></details>
 <details><summary>Is the analysis reviewed by a human?</summary><p>The service uses automated, AI-assisted analysis. It can contain mistakes or omissions. Source links help you verify the information before acting; it does not replace your vulnerability management program.</p></details>
-<details><summary>How does Enterprise delivery work?</summary><p>Enterprise includes the audio briefing and a structured JSON payload sent to a configured HTTPS endpoint. You supply the endpoint and implement any downstream integration. It is not a ready-made Slack or SIEM connector.</p></details>
-<details><summary>Is a free trial included?</summary><p>This page does not enroll you in a self-service free trial. Any trial or introductory terms must be explicitly shown in your Paddle checkout before you confirm a subscription.</p></details>
+<details><summary>How does Enterprise delivery work?</summary><p>Enter your public HTTPS endpoint before checkout. After Paddle confirms your subscription at the next scheduled sync, the buyer receives the audio briefing and the structured JSON is delivered to that endpoint. You implement any downstream integration; it is not a ready-made Slack or SIEM connector.</p></details>
+<details><summary>Is a free trial included?</summary><p>Only Individual includes a 7-day free trial, then $99/month unless cancelled before the trial ends. Teams ($349/month) and Enterprise ($999/month) have no free trial. Paddle Checkout displays the definitive trial, payment-method and billing terms before you confirm.</p></details>
 <details><summary>Who handles payments and cancellations?</summary><p>Paddle is the Merchant of Record for checkout, billing and invoices. You can manage billing through the links in your Paddle receipt. Cancelling stops future renewals; refund eligibility is described in the <a href="refund.html">Refund Policy</a>.</p></details>
 </div></div></section>
 <section class="closing wrap"><p class="eyebrow">MAKE ROOM FOR THE WORK THAT MATTERS.</p><h2>Start your day<br>with <em>a clearer signal.</em></h2><a class="button" href="#pricing">Explore the plans <span>↗</span></a></section>
