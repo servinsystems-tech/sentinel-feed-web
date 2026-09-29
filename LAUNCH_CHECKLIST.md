@@ -19,10 +19,10 @@ The static site is prepared for `https://getsentinelfeed.com/` and GitHub Pages.
 2. Point the apex domain and `www` to GitHub Pages, wait for DNS validation, then enable **Enforce HTTPS**.
 3. Configure `support@getsentinelfeed.com` as a forwarding alias to the owner's private mailbox and verify receipt before submitting the domain.
 4. Verify a dedicated sending subdomain such as `updates.getsentinelfeed.com` in Resend and copy the exact DNS records Resend provides. Do not put the Resend API key in this repository.
-5. Confirm Teams recipient onboarding and Enterprise HTTPS endpoint onboarding operationally.
+5. Confirm automatic Teams recipient and Enterprise endpoint capture in the two checkout setup forms, with no manual onboarding.
 6. In the private backend repository, set the live `PADDLE_API_KEY` GitHub Secret, `PADDLE_ENVIRONMENT=production` Variable, and live `PADDLE_PRICE_MAP` Variable. Delete or update an existing `PADDLE_PRICE_MAP` Secret, which takes precedence over the Variable. Never add the Paddle API key to this site.
 7. Check Paddle's live dashboard: Individual's Price has a 7-day free trial, Teams and Enterprise do not, and the site domain is approved for live checkout. Do not infer dashboard configuration from the client-side code.
-8. Coordinate the web deployment and backend live settings so a customer cannot complete a live checkout while backend sync still points to sandbox. Confirm Teams recipient onboarding and Enterprise HTTPS endpoint onboarding operationally before accepting those plans.
+8. Coordinate the web deployment and backend live settings so a customer cannot complete a live checkout while backend sync still points to sandbox. Confirm Paddle copies checkout `customData` into the live subscription before accepting Teams or Enterprise.
 
 ## Refund commitment to review
 
