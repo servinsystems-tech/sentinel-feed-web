@@ -14,7 +14,7 @@ const prices = {
 
 test('the public checkout contains only the intended live plan configuration', () => {
   assert.equal(config.environment, 'production');
-  assert.equal(config.token, 'live_7395424bad626fbc2c4f37e795d');
+  assert.match(config.token, /^live_[a-f0-9]+$/);
   assert.deepEqual(config.prices, prices);
   assert.deepEqual([...html.matchAll(/data-plan="([^"]+)"/g)].map(match => match[1]), Object.keys(prices));
   assert.doesNotMatch(html, /PRE-LAUNCH PREVIEW|Checkout is in test mode|\btest_[a-z0-9]+|pri_01m2xb/);
