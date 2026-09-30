@@ -11,6 +11,16 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://getsentinelfeed.com/">
 <meta property="og:site_name" content="SentinelFeed">
+<meta property="og:image" content="https://getsentinelfeed.com/assets/og-sentinelfeed.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:alt" content="SentinelFeed. Critical vulnerability intelligence for the working day.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SentinelFeed — Less noise. Better security decisions.">
+<meta name="twitter:description" content="Business-day vulnerability briefings. CVSS severity, CISA KEV exploitation evidence and EPSS probability in one focused briefing.">
+<meta name="twitter:image" content="https://getsentinelfeed.com/assets/og-sentinelfeed.png">
+<meta name="twitter:image:alt" content="SentinelFeed. Critical vulnerability intelligence for the working day.">
 <link rel="icon" href="assets/logo-original.jpg" type="image/jpeg">
 <link rel="stylesheet" href="styles.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"SentinelFeed","url":"https://getsentinelfeed.com/","email":"support@getsentinelfeed.com","address":{"@type":"PostalAddress","addressCountry":"PY"}}</script>
@@ -28,7 +38,7 @@
 <section class="hero wrap">
 <div class="hero-copy"><p class="eyebrow"><i></i> INTELLIGENCE FOR THE WORKING DAY</p>
 <h1>Stay ahead.<br>Without the<br><em>information overload.</em></h1>
-<p class="lead">A focused audio briefing on critical vulnerabilities, their business impact, and what to patch next. Built for security leaders with decisions to make.</p>
+<p class="lead">A focused audio briefing on critical vulnerabilities, why they matter, and what deserves attention next. Built for security leaders with decisions to make.</p>
 <div class="actions"><a class="button" href="#pricing">Choose your briefing <span>↗</span></a><a class="text-link" href="#sample">Explore a sample <span>↓</span></a></div>
 <p class="micro">Business-day delivery · Source-linked analysis · Secure Paddle checkout</p>
 </div>
@@ -50,7 +60,22 @@
 </section>
 <section class="sample-section" id="sample"><div class="wrap section">
 <div class="section-heading"><div><p class="eyebrow">02 / INSIDE THE BRIEFING</p><h2>Hear the priority.<br><em>See the reasoning.</em></h2></div><p>Audio for your morning. Structured intelligence for your workflow. A clear explanation of what you receive before you subscribe.</p></div>
-<div class="sample-grid"><article class="sample-card"><div class="card-heading"><span class="label">EDITORIAL SAMPLE</span><span class="muted">Fictional scenario</span></div><h3>An exposed gateway.<br>A decision that cannot wait.</h3><blockquote>“Today's priority is an internet-facing gateway with confirmed exploitation. Check whether the affected version is deployed, review the vendor advisory, and prioritize the recommended update.”</blockquote><p class="muted">Illustrative script excerpt, not a current vulnerability alert or playable audio recording.</p><div class="sample-detail"><span>CONTEXT</span><p>Exploitation evidence moves a finding ahead of severity alone.</p></div><div class="sample-detail"><span>NEXT ACTION</span><p>Verify exposure, check the official advisory, then apply the appropriate fix.</p></div></article>
+<div class="sample-grid"><article class="sample-card"><div class="card-heading"><span class="label">AUDIO DEMO</span><span class="muted">Fictional scenario</span></div><h3>An exposed gateway.<br>A decision that cannot wait.</h3><blockquote>“Today's priority is an internet-facing gateway with confirmed exploitation. Check whether the affected version is deployed, review the vendor advisory, and prioritize the recommended update.”</blockquote>
+<div class="audio-demo">
+<p id="audio-demo-label">Illustrative audio demo — fictional scenario</p>
+<p id="audio-demo-description" class="muted">A fixed demonstration of the briefing voice and format. The scenario is fictional; this is not the current daily briefing or a real vulnerability alert.</p>
+<audio controls preload="none" aria-labelledby="audio-demo-label" aria-describedby="audio-demo-description">
+<source src="assets/sentinelfeed-audio-demo.mp3" type="audio/mpeg">
+Your browser does not support audio playback. <a href="assets/sentinelfeed-audio-demo.mp3">Download the illustrative audio demo</a> or read the transcript below.
+</audio>
+<details class="demo-transcript"><summary>Read the demo transcript</summary>
+<p>Welcome to this SentinelFeed illustrative audio demo. The gateway and scenario are fictional. This is not today's daily briefing.</p>
+<p>In this example, an internet-facing gateway has a critical vulnerability with confirmed exploitation. That exploitation evidence makes the finding deserve attention ahead of severity alone.</p>
+<p>If your organization used this gateway, the next step would be to check whether an affected version was deployed. Review the official vendor advisory, then prioritize the recommended update through your normal change controls.</p>
+<p>The point is to connect the finding to a decision: what might be exposed, why it matters, and what your team should verify next. A severity number provides context, but it does not establish your organization's actual exposure.</p>
+<p>This recording illustrates the voice and format of a SentinelFeed briefing. It reports no real vulnerability and is not a current security alert.</p>
+</details></div>
+<div class="sample-detail"><span>CONTEXT</span><p>Exploitation evidence moves a finding ahead of severity alone.</p></div><div class="sample-detail"><span>NEXT ACTION</span><p>Verify exposure, check the official advisory, then apply the appropriate fix.</p></div></article>
 <article class="code-card"><div class="card-heading"><span class="label">ENTERPRISE / DATA STREAM</span><a href="sample.json" download>Download JSON ↓</a></div><h3>Ready for your own tools.</h3><p>Structured delivery to your configured HTTPS endpoint. Connect it to your internal workflow with your own integration.</p><pre aria-label="Illustrative JSON payload"><code>{
   "date": "2026-09-21",
   "critical_threats_detected": true,
@@ -64,7 +89,7 @@
     "required_patch_action": "Review advisory...",
     "nvd_url": "https://nvd.nist.gov/"
   }]
-}</code></pre><small>Example data only. null means a signal is unavailable.</small></article></div>
+}</code></pre><small>Example data only. null means a signal is unavailable.</small><p class="signal-note"><code>actively_exploited</code> reflects CISA KEV catalog status. <code>false</code> does not prove that exploitation has never occurred.</p></article></div>
 </div></section>
 <section class="section wrap" id="pricing">
 <div class="section-heading"><div><p class="eyebrow">03 / CHOOSE YOUR COVERAGE</p><h2>A clearer morning.<br><em>At your team's scale.</em></h2></div><p>Monthly subscriptions in USD. Review applicable taxes and the final total in Paddle before confirming.</p></div>
