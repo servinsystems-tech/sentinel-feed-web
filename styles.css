@@ -21,3 +21,14 @@
 .checkout-setup .button{margin-top:14px}.setup-privacy{text-align:center}
 [hidden]{display:none!important}
 @media(max-width:600px){.checkout-setup{padding:22px}.setup-grid{grid-template-columns:1fr}}
+
+.sample-grid>article{min-width:0}
+.audio-demo{margin:24px 0}
+.audio-demo>p:first-child{font-size:12px;font-weight:600;color:var(--ink)}
+.audio-demo audio{display:block;width:100%;max-width:100%;margin-top:16px;color-scheme:dark}
+.audio-demo audio:focus-visible{outline:3px solid var(--accent);outline-offset:5px}
+.demo-transcript{margin-top:14px;font-size:12px}
+.demo-transcript summary{cursor:pointer;color:var(--accent)}
+.demo-transcript p{font-size:12px;line-height:1.7}
+.code-card .signal-note{font-size:11px;line-height:1.65;margin:12px 0 0}
+.signal-note code{font-size:inherit;overflow-wrap:anywhere}
